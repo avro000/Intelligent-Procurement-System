@@ -7,7 +7,7 @@ services:
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: PYTHON_VERSION
-        value: 3.10.12
+        value: 3.11.9
       - key: DATABASE_URL
         value: postgresql://neondb_owner:npg_pLHPxS0YUc8K@ep-crimson-sun-bdo67trh-pooler.c-8.us-east-2.aws.neon.tech/neondb?sslmode=require
       - key: AWS_ENDPOINT_URL_S3
