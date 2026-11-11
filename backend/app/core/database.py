@@ -46,10 +46,12 @@ if settings.DATABASE_URL.startswith("sqlite"):
 engine = create_engine(
     settings.DATABASE_URL,
     connect_args=connect_args,
+    pool_pre_ping=True,
+    pool_recycle=300,
     echo=False
 )
 
-# Enable foreign keys and WAL for SQLite
+# Enable foreign keys and WAL if SQLite is used
 if settings.DATABASE_URL.startswith("sqlite"):
     @event.listens_for(engine, "connect")
     def set_sqlite_pragma(dbapi_connection, connection_record):

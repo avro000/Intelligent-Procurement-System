@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: ipms-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.12
+      - key: DATABASE_URL
+        value: postgresql://neondb_owner:npg_pLHPxS0YUc8K@ep-crimson-sun-bdo67trh-pooler.c-8.us-east-2.aws.neon.tech/neondb?sslmode=require
+      - key: AWS_ENDPOINT_URL_S3
+        value: https://br-falling-meadow-bd10bo1t.storage.c-8.us-east-2.aws.neon.tech
+      - key: AWS_ACCESS_KEY_ID
+        value: nak_live_b7b874b981ae4b3795b901b84f6d6a93
+      - key: AWS_SECRET_ACCESS_KEY
+        value: nsk_live_078cc87f49818d17f9a6786526a973ec19c96f21ca31a4376e8b0f73af6511af
+      - key: AWS_REGION
+        value: us-east-2
