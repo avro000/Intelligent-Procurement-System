@@ -12,16 +12,13 @@ class Settings(BaseSettings):
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24  # 24 hours
 
-    # Database: Neon PostgreSQL
-    DATABASE_URL: str = os.getenv(
-        "DATABASE_URL",
-        "postgresql://neondb_owner:npg_pLHPxS0YUc8K@ep-crimson-sun-bdo67trh-pooler.c-8.us-east-2.aws.neon.tech/neondb?sslmode=require"
-    )
+    # Database: Neon PostgreSQL (configured via DATABASE_URL environment variable)
+    DATABASE_URL: str = os.getenv("DATABASE_URL", "")
 
     # Neon S3-compatible Object Storage
-    AWS_ENDPOINT_URL_S3: str = os.getenv("AWS_ENDPOINT_URL_S3", "https://br-falling-meadow-bd10bo1t.storage.c-8.us-east-2.aws.neon.tech")
-    AWS_ACCESS_KEY_ID: str = os.getenv("AWS_ACCESS_KEY_ID", "nak_live_b7b874b981ae4b3795b901b84f6d6a93")
-    AWS_SECRET_ACCESS_KEY: str = os.getenv("AWS_SECRET_ACCESS_KEY", "nsk_live_078cc87f49818d17f9a6786526a973ec19c96f21ca31a4376e8b0f73af6511af")
+    AWS_ENDPOINT_URL_S3: str = os.getenv("AWS_ENDPOINT_URL_S3", "")
+    AWS_ACCESS_KEY_ID: str = os.getenv("AWS_ACCESS_KEY_ID", "")
+    AWS_SECRET_ACCESS_KEY: str = os.getenv("AWS_SECRET_ACCESS_KEY", "")
     AWS_REGION: str = os.getenv("AWS_REGION", "us-east-2")
 
     # Storage paths
