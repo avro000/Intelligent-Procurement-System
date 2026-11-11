@@ -68,6 +68,9 @@ def test_duplicate_pr_detection_20_percent_rule(db):
         )
         db.add(pr_item)
         db.commit()
+    else:
+        pr.status = PRStatus.UNDER_REVIEW.value
+        db.commit()
 
     # 1. Quantity = 11 units -> abs(10-11)/max(10,11)*100 = 1/11*100 = 9.09% <= 20% -> MATCH!
     matches = detect_duplicate_requests(db, item.id, dept.id, requested_quantity=11.0)

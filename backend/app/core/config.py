@@ -50,7 +50,7 @@ class Settings(BaseSettings):
     AI_ENABLED: bool = True
     LLM_PROVIDER: str = os.getenv("LLM_PROVIDER", "gemini")  # "mock_local", "gemini", "openai", "anthropic"
     OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")
-    GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "AIzaSyDj56w6Heffi8RTGaYE9JJF0vnj01xYCus")
+    GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
     ANTHROPIC_API_KEY: str = os.getenv("ANTHROPIC_API_KEY", "")
     OPENAI_MODEL: str = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
     GEMINI_MODEL: str = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")

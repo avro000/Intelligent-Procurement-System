@@ -25,8 +25,10 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
-lib64/
+# Python virtualenv & builds
+backend/lib/
+backend/lib64/
+!frontend/lib/
 parts/
 sdist/
 var/
@@ -42,9 +44,13 @@ htmlcov/
 
 # Databases & local storage
 *.sqlite3
-procurement.db
-backend/procurement.db
+*.db
+*.db-shm
+*.db-wal
+procurement.db*
+backend/procurement.db*
 storage/purchase_orders/*.pdf
+backend/storage/purchase_orders/*.pdf
 
 # Office temporary lock files
 ~$*.pptx

@@ -639,6 +639,7 @@ def issue_rfqs(
 
 
 @router.post("/{pr_id}/vendor-selection", response_model=PurchaseRequestDetailOut)
+@router.post("/{pr_id}/select-vendor", response_model=PurchaseRequestDetailOut)
 def select_vendor(
     pr_id: uuid.UUID,
     decision_in: VendorSelectionRequest,
@@ -651,14 +652,20 @@ def select_vendor(
 
     validate_supervisor_authority(db, current_user, pr)
 
+    chosen_vendor_id = decision_in.selected_vendor_id or decision_in.vendor_id
+    if not chosen_vendor_id:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="selected_vendor_id is required.")
+
+    chosen_override_reason = decision_in.override_reason or decision_in.justification
+
     # Quotation evaluation to know who is recommended
     # If no quotations exist yet, rec_id falls back to the currently selected vendor (no false override)
     analysis = evaluate_quotations_v2(db, pr.id)
     rec_id = analysis.recommended_vendor_id if analysis.recommended_vendor_id else pr.selected_vendor_id
 
     # Safe string comparison to avoid uuid.UUID != str false-override bug
-    is_override = bool(rec_id and str(decision_in.selected_vendor_id).lower() != str(rec_id).lower())
-    if is_override and (not decision_in.override_reason or len(decision_in.override_reason.strip()) < 3):
+    is_override = bool(rec_id and str(chosen_vendor_id).lower() != str(rec_id).lower())
+    if is_override and (not chosen_override_reason or len(chosen_override_reason.strip()) < 3):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Overriding the system-recommended vendor requires a mandatory, substantive reason."
@@ -668,20 +675,20 @@ def select_vendor(
     existing_dec = db.query(VendorSelectionDecision).filter(VendorSelectionDecision.purchase_request_id == pr.id).first()
     if existing_dec:
         existing_dec.recommended_vendor_id = rec_id
-        existing_dec.selected_vendor_id = decision_in.selected_vendor_id
+        existing_dec.selected_vendor_id = chosen_vendor_id
         existing_dec.supervisor_id = current_user.id
-        existing_dec.override_reason = decision_in.override_reason if is_override else None
+        existing_dec.override_reason = chosen_override_reason if is_override else None
     else:
         new_dec = VendorSelectionDecision(
             purchase_request_id=pr.id,
             recommended_vendor_id=rec_id,
-            selected_vendor_id=decision_in.selected_vendor_id,
+            selected_vendor_id=chosen_vendor_id,
             supervisor_id=current_user.id,
-            override_reason=decision_in.override_reason if is_override else None
+            override_reason=chosen_override_reason if is_override else None
         )
         db.add(new_dec)
 
-    pr.selected_vendor_id = decision_in.selected_vendor_id
+    pr.selected_vendor_id = chosen_vendor_id
     pr.status = PRStatus.FINAL_APPROVAL_PENDING.value
     db.commit()
 

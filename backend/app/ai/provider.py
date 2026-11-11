@@ -31,7 +31,14 @@ class MockLocalLLMProvider(BaseLLMProvider):
 
     def generate_text(self, prompt: str, system_prompt: Optional[str] = None) -> str:
         prompt_lower = prompt.lower()
-        if "summarize" in prompt_lower or "summary" in prompt_lower:
+        if "internal procurement policies" in prompt_lower or "policy threshold" in prompt_lower or "policy" in prompt_lower:
+            return (
+                "**Policy Guidance:**\n"
+                "According to the internal procurement policy guidelines, purchases exceeding $5,000 require "
+                "a multi-vendor Request for Quotation (RFQ) process with at least three competitive quotations. "
+                "All requisitions must follow departmental authorization thresholds."
+            )
+        elif "summarize" in prompt_lower or "summary" in prompt_lower:
             return (
                 "**Executive PR Summary:**\n"
                 "This procurement request has been structured with verified specifications. "

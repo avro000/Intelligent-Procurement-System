@@ -873,13 +873,13 @@ export default function Home() {
 
                             <button
                               onClick={() => {
-                                if (act.type === 'REVISE') handleOpenReviseModal(pr);
-                                else if (act.type === 'EVALUATE') handleOpenQuotationComparison(pr);
+                                if (act?.type === 'REVISE') handleOpenReviseModal(pr);
+                                else if (act?.type === 'EVALUATE') handleOpenQuotationComparison(pr);
                                 else handleOpenCheckingSheet(pr.id);
                               }}
-                              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 shrink-0 ${act.style}`}
+                              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 shrink-0 ${act?.style || 'bg-blue-600 text-white'}`}
                             >
-                              <span>{act.label}</span>
+                              <span>{act?.label || 'Review'}</span>
                               <ArrowRight className="w-3.5 h-3.5" />
                             </button>
                           </div>
@@ -991,7 +991,7 @@ export default function Home() {
                                   </span>
                                 </td>
                                 <td className="py-3 px-3 text-right space-x-2">
-                                  {act.type === 'REVISE' && (
+                                  {act?.type === 'REVISE' && (
                                     <button
                                       onClick={() => handleOpenReviseModal(pr)}
                                       className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-xs font-bold transition inline-flex items-center space-x-1 shadow-sm"
@@ -1001,7 +1001,7 @@ export default function Home() {
                                     </button>
                                   )}
 
-                                  {act.type === 'EVALUATE' && (
+                                  {act?.type === 'EVALUATE' && (
                                     <button
                                       onClick={() => handleOpenQuotationComparison(pr)}
                                       className="px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-xs font-bold transition inline-flex items-center space-x-1 shadow-sm"
@@ -1156,7 +1156,7 @@ export default function Home() {
                               </span>
                             </td>
                             <td className="py-3.5 px-3 text-right space-x-2">
-                              {act.type === 'REVISE' && (
+                              {act?.type === 'REVISE' && (
                                 <button
                                   onClick={() => handleOpenReviseModal(pr)}
                                   className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-xs font-bold transition inline-flex items-center space-x-1 shadow-sm"
@@ -1166,7 +1166,7 @@ export default function Home() {
                                 </button>
                               )}
 
-                              {act.type === 'EVALUATE' && (
+                              {act?.type === 'EVALUATE' && (
                                 <button
                                   onClick={() => handleOpenQuotationComparison(pr)}
                                   className="px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-xs font-bold transition inline-flex items-center space-x-1 shadow-sm"

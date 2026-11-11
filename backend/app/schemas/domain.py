@@ -364,8 +364,10 @@ class QuotationAnalysisOutV2(BaseModel):
 
 # --- FINAL SELECTION & APPROVAL ---
 class VendorSelectionRequest(BaseModel):
-    selected_vendor_id: uuid.UUID
+    selected_vendor_id: Optional[uuid.UUID] = None
+    vendor_id: Optional[uuid.UUID] = None
     override_reason: Optional[str] = None
+    justification: Optional[str] = None
 
 class FinalApprovalRequest(BaseModel):
     notes: Optional[str] = None
